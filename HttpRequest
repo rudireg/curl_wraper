@@ -254,6 +254,7 @@ Class HttpRequest
         $buff = strtolower($args[0]);
         if(!strstr($buff, ".")) return"";
         if(strstr($buff, "http://")) $buff = substr($buff, strlen("http://"));
+        else if(strstr($buff, "https://")) $buff = substr($buff, strlen("https://"));
         if(strstr($buff, "www."))    $buff = substr($buff, strlen("www."));
         $posEnd = strpos($buff, "/");
         if($posEnd > 0)
@@ -305,7 +306,7 @@ Class HttpRequest
         $domain = $this->GetDomainFromURL($url);
         $this->LineCookies ="";
 
-        if(count($this->ArrayCookies[$domain]) < 1) return;
+        if(empty($this->ArrayCookies[$domain]) || count($this->ArrayCookies[$domain]) < 1) return;
         foreach ($this->ArrayCookies[$domain] as $k=>$v)
         {
             $this->LineCookies = $this->LineCookies."$k=$v; ";
